@@ -104,4 +104,21 @@ class PostRepositoryTest {
                 )
                 .verifyComplete();
     }
+
+    @Test
+    @DisplayName("사용자가 삭제할 게시글 번호를 전달하면 게시글이 삭제된다.")
+    void deletePostTest() {
+        // given
+        Post post = new Post(1, "title", "content");
+        Post savedPost = postRepository.save(post).block();
+
+        // when
+
+        // then
+        postRepository.deleteByNo(savedPost.getNo())
+                .as(StepVerifier::create)
+                .expectNext(1)
+                .verifyComplete();
+
+    }
 }

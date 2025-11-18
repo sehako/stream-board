@@ -140,4 +140,19 @@ class PostControllerTest {
                     Assertions.assertThat(data.content()).isEqualTo("newContent");
                 });
     }
+
+    @Test
+    @DisplayName("사용자가 게시글 삭제 요청을 보내면 게시글을 삭제한다.")
+    void deletePostTest() {
+        // given
+        Integer no = 1;
+
+        // when
+        Mockito.when(postService.deletePost(no)).thenReturn(Mono.just(1));
+
+        // then
+        webTestClient.delete().uri("/post/{no}", no)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
 }

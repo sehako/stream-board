@@ -19,4 +19,7 @@ public interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
             + "title = IFNULL(:title, title) "
             + "WHERE no = :no")
     Mono<Integer> updatePost(Integer no, String title, String content);
+
+    @Modifying
+    Mono<Integer> deleteByNo(Integer no);
 }

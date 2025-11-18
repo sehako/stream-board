@@ -45,4 +45,8 @@ public class PostService {
                 )
                 .map(PostDetailRetrieveResponse::from);
     }
+
+    public Mono<Integer> deletePost(Integer no) {
+        return postRepository.deleteByNo(no);
+    }
 }
