@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.sehako.streamboard.application.PostService;
 import com.sehako.streamboard.application.response.PostRetrieveResponse;
 import com.sehako.streamboard.common.response.JsonResponse;
-import com.sehako.streamboard.common.response.message.MessageExplorer;
 import com.sehako.streamboard.presentation.request.PostRetrieveRequest;
 import com.sehako.streamboard.presentation.request.PostWriteRequest;
 import java.time.LocalDateTime;
@@ -15,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
@@ -25,7 +23,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @WebFluxTest(PostController.class)
-@Import(MessageExplorer.class)
 @ActiveProfiles("test")
 class PostControllerTest {
 
