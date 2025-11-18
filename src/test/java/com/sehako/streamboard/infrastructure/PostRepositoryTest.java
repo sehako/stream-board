@@ -64,4 +64,22 @@ class PostRepositoryTest {
                 .expectNextCount(5)
                 .verifyComplete();
     }
+
+    @Test
+    @DisplayName("사용자가 게시판 조회를 위해 게시판 번호를 전달하면 게시판 상세 정보를 조회한다.")
+    void retrievePostDetailTest() {
+        // given
+        Post post = new Post(1, "title", "content");
+        Post savedPost = postRepository.save(post).block();
+
+        // when
+        Mono<Post> retrievedPost = postRepository.findByNo(savedPost.getNo());
+
+        // then
+        StepVerifier.create(retrievedPost)
+                .expectNextMatches(p ->
+                        p.getNo() != null && p.getTitle().equals("title") && p.getContent().equals("content")
+                )
+                .verifyComplete();
+    }
 }

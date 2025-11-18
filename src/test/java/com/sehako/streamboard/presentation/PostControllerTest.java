@@ -3,12 +3,15 @@ package com.sehako.streamboard.presentation;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sehako.streamboard.application.PostService;
+import com.sehako.streamboard.application.response.PostDetailRetrieveResponse;
 import com.sehako.streamboard.application.response.PostRetrieveResponse;
 import com.sehako.streamboard.common.response.JsonResponse;
+import com.sehako.streamboard.presentation.request.PostDetailRetrieveRequest;
 import com.sehako.streamboard.presentation.request.PostRetrieveRequest;
 import com.sehako.streamboard.presentation.request.PostWriteRequest;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -80,5 +83,35 @@ class PostControllerTest {
                     assertThat(body.result()).hasSize(5);
                 });
 
+    }
+
+    @Test
+    @DisplayName("사용자가 포스트를 조회하면 포스팅 상세 내역을 반환한다.")
+    void retrievePostDetailTest() {
+        // given
+        Integer no = 1;
+        PostDetailRetrieveRequest request = new PostDetailRetrieveRequest(no);
+
+        Mockito.when(postService.retrievePostDetail(request))
+                .thenReturn(
+                        Mono.just(
+                                new PostDetailRetrieveResponse(
+                                        no, "title", "content", LocalDateTime.now()
+                                )
+                        )
+                );
+
+        // when
+        webTestClient.get().uri("/post/{no}", no)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(new ParameterizedTypeReference<JsonResponse<PostDetailRetrieveResponse>>() {
+                })
+                .consumeWith(response -> {
+                    PostDetailRetrieveResponse body = response.getResponseBody().result();
+                    Assertions.assertThat(body).isNotNull();
+                });
+
+        // then
     }
 }

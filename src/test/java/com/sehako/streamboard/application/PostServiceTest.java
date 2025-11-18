@@ -1,11 +1,14 @@
 package com.sehako.streamboard.application;
 
+import com.sehako.streamboard.application.response.PostDetailRetrieveResponse;
 import com.sehako.streamboard.application.response.PostRetrieveResponse;
 import com.sehako.streamboard.infrastructure.PostRepository;
 import com.sehako.streamboard.infrastructure.domain.Post;
+import com.sehako.streamboard.presentation.request.PostDetailRetrieveRequest;
 import com.sehako.streamboard.presentation.request.PostRetrieveRequest;
 import com.sehako.streamboard.presentation.request.PostWriteRequest;
 import java.util.List;
+import java.util.Objects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,4 +71,25 @@ class PostServiceTest {
                 .verifyComplete();
 
     }
+
+    @Test
+    @DisplayName("사용자가 게시글을 조회하면 포스팅 조회 응답으로 반환된다.")
+    void retrievePostingTest() {
+        // given
+        Post post = new Post(1, "title1", "content1");
+        Post savedPost = postRepository.save(post).block();
+
+        PostDetailRetrieveRequest request = new PostDetailRetrieveRequest(savedPost.getNo());
+
+        // when
+        Mono<PostDetailRetrieveResponse> response = postService
+                .retrievePostDetail(request);
+
+        // then
+        StepVerifier.create(response)
+                .expectNextMatches(Objects::nonNull)
+                .verifyComplete();
+
+    }
+
 }
