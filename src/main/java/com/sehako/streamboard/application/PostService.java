@@ -10,10 +10,12 @@ import com.sehako.streamboard.presentation.request.PostRetrieveRequest;
 import com.sehako.streamboard.presentation.request.PostWriteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostService {
 
@@ -24,6 +26,7 @@ public class PostService {
                 .map(Post::getNo);
     }
 
+    @Transactional(readOnly = true)
     public Flux<PostRetrieveResponse> retrievePosts(PostRetrieveRequest request) {
         Integer cursor = request.cursor();
         Integer size = request.size();
@@ -32,6 +35,7 @@ public class PostService {
                 .map(PostRetrieveResponse::from);
     }
 
+    @Transactional(readOnly = true)
     public Mono<PostDetailRetrieveResponse> retrievePostDetail(PostDetailRetrieveRequest request) {
         Integer no = request.no();
         return postRepository.findByNo(no)
