@@ -44,9 +44,7 @@ public class PostService {
 
     public Mono<PostDetailRetrieveResponse> patchPostDetail(Integer no, PostPatchRequest request) {
         return postRepository.updatePost(no, request.title(), request.content())
-                .flatMap(updatedCount ->
-                        postRepository.findByNo(no)
-                )
+                .then(postRepository.findByNo(no))
                 .map(PostDetailRetrieveResponse::from);
     }
 
