@@ -8,7 +8,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
-    @Query("SELECT * FROM post WHERE no > :cursor LIMIT :size")
+    @Query("SELECT * "
+            + "FROM post "
+            + "WHERE no > :cursor "
+            + "ORDER BY no DESC "
+            + "LIMIT :size")
     Flux<Post> findByCursor(Integer cursor, Integer size);
 
     Mono<Post> findByNo(Integer no);
