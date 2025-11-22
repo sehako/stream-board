@@ -1,6 +1,6 @@
 package com.sehako.streamboard.infrastructure;
 
-import com.sehako.streamboard.common.R2dbcAuditingConfiguration;
+import com.sehako.streamboard.common.configuration.R2dbcAuditingConfiguration;
 import com.sehako.streamboard.infrastructure.domain.Post;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
