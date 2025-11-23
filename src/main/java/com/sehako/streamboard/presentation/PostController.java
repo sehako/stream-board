@@ -63,6 +63,7 @@ public class PostController {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             Locale locale
     ) {
+        log.info("retrievePosts cursor={}, size={}", cursor, size);
         return buildResponseEntity(
                 SUCCESS,
                 getResponseMessage(SUCCESS, locale),

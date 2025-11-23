@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 @Transactional
 @RequiredArgsConstructor
 public class PostService {
+    private final static Integer DEFAULT_MAX_CURSOR = Integer.MAX_VALUE;
 
     private final PostRepository postRepository;
 
@@ -29,6 +30,9 @@ public class PostService {
     @Transactional(readOnly = true)
     public Flux<PostRetrieveResponse> retrievePosts(PostRetrieveRequest request) {
         Integer cursor = request.cursor();
+        if (cursor == 0) {
+            cursor = DEFAULT_MAX_CURSOR;
+        }
         Integer size = request.size();
 
         return postRepository.findByCursor(cursor, size)
