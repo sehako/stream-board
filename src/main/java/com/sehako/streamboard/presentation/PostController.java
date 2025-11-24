@@ -42,19 +42,14 @@ public class PostController {
 
     @PostMapping
     public Mono<ResponseEntity<JsonResponse<Void>>> createPost(
-            @RequestBody PostWriteRequest request,
-            Locale locale
+            @RequestBody PostWriteRequest request
     ) {
-        return Mono.zip(
-                getResponseMessage(SUCCESS, locale),
-                postService.createPost(request)
-        ).map(tuple -> {
-            String message = tuple.getT1();
-            Integer no = tuple.getT2();
-            return ResponseEntity
-                    .created(URI.create(String.format(POST_RETRIEVE_URI, no)))
-                    .body(JsonResponse.of(SUCCESS, message));
-        });
+        return postService.createPost(request)
+                .map(no -> ResponseEntity
+                        .created(
+                                URI.create(String.format(POST_RETRIEVE_URI, no))
+                        )
+                        .build());
     }
 
     @GetMapping
