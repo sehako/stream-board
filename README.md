@@ -47,7 +47,7 @@ Spring WebFlux 실습 목적으로 개발한 게시판 애플리케이션입니�
 ```json
 {
   "code": "SUCCESS",
-  "message": "성공",
+  "message": "요청이 성공적으로 처리되었습니다.",
   "result": [
     {
       "no": 1,
@@ -80,7 +80,7 @@ Spring WebFlux 실습 목적으로 개발한 게시판 애플리케이션입니�
 ```json
 {
   "code": "SUCCESS",
-  "message": "성공",
+  "message": "요청이 성공적으로 처리되었습니다.",
   "result": {
     "no": 1,
     "title": "첫 번째 게시글",
@@ -118,7 +118,7 @@ Spring WebFlux 실습 목적으로 개발한 게시판 애플리케이션입니�
 ```json
 {
   "code": "SUCCESS",
-  "message": "성공",
+  "message": "요청이 성공적으로 처리되었습니다.",
   "result": {
     "no": 1,
     "title": "수정된 제목",
